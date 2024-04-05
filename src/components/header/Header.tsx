@@ -1,13 +1,15 @@
 import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
 import logoSrc from "/assets/images/airseeker-logo.svg";
-import { Link } from "react-router-dom";
+import starSrc from "/assets/images/star.svg";
+import { headerSelectedState } from "../../recoil/atom";
 
 const Header = () => {
-  // const loginInfo = useRecoilValue(loginInfoState);
-  // const headerSelectedIndex = useRecoilValue(headerSelectedState);
-  // const setLoginModal = useSetRecoilState(loginModalState);
-  // const navigate = useNavigate();
+  const headerSelectedIndex = useRecoilValue(headerSelectedState);
+  const navigate = useNavigate();
+  const isLogin = false;
 
   return (
     <>
@@ -18,10 +20,32 @@ const Header = () => {
             <Link to={"/"}>
               <Logo src={logoSrc} />
             </Link>
-            <HeaderItem $isSelected={false}>항공권 가격 변동 탐색</HeaderItem>{" "}
-            <HeaderItem $isSelected={false}>항공권 최저가 검색</HeaderItem>{" "}
-            <HeaderItem $isSelected={false}>카카오 로그인</HeaderItem>
+            <HeaderItem
+              $isSelected={headerSelectedIndex === "list"}
+              onClick={() => navigate("/list")}
+            >
+              <HeaderStar src={starSrc} />
+              항공권 가격 변동 추적
+            </HeaderItem>
+            <HeaderItem
+              $isSelected={headerSelectedIndex === "list"}
+              onClick={() => navigate("/list")}
+            >
+              <HeaderStar src={starSrc} />
+              항공권 최저가 탐색
+            </HeaderItem>
           </HeaderContainer>
+          {isLogin ? (
+            <div>로그인완료</div>
+          ) : (
+            <HeaderItem
+              $isSelected={headerSelectedIndex === "myTeam"}
+              onClick={() => navigate("/login")}
+            >
+              <HeaderStar src={starSrc} />
+              로그인/회원가입
+            </HeaderItem>
+          )}
         </HeaderContentContainer>
       </HeaderLayout>
     </>
@@ -101,4 +125,13 @@ const HeaderItem = styled.button<{ $isSelected: boolean }>`
     opacity: 1;
     transition: opacity 0.2s ease;
   }
+`;
+
+const HeaderStar = styled.img`
+  width: 2rem;
+  height: 2rem;
+
+  position: absolute;
+  left: -1.8rem;
+  display: none;
 `;
