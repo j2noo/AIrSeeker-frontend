@@ -25,7 +25,7 @@ const Header = () => {
               onClick={() => navigate("/list")}
             >
               <HeaderStar src={starSrc} />
-              항공권 가격 변동 추적s
+              항공권 가격 변동 추적
             </HeaderItem>
             <HeaderItem
               $isSelected={headerSelectedIndex === "login"}
