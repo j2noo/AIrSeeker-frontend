@@ -5,41 +5,38 @@ const Footer = () => {
     <FooterContainer>
       <FooterBox>
         <FooterImage
-          src={'/assets/images/common/footer_logo.svg'}
+          src={'/assets/images/airseeker-logo.svg'}
           alt={'logo'}
         />
         <FooterBottom>
           <div>
             <ul>
               <li>
-                <span>서비스명</span> 원팀 (WANTEAM.)
+                <span>서비스명</span> AirSeeker
               </li>
               <li>
-                <span>소속</span> 한국대학생IT경영학회 (KUSITMS)
+                <span>소속</span> 세종대학교 컴퓨터공학과
               </li>
               <li>
-                <span>팀</span> 도도독동료
+                <span>팀</span> AirSeeker
               </li>
               <li>
-                <span>이메일</span> ojy09293@gmail.com
+                <span>이메일</span> wlsdndml213@naver.com
               </li>
             </ul>
           </div>
           <div>
             <ul>
-              <li>
-                <span>기획</span> 박형준(PM), 채영대, 민혜린
-              </li>
+              
               <li>
                 <span>개발</span>
                 <p>
-                  <div>FE | 박진우, 박예진 </div>
-                  <div>BE | 오진영, 이민정</div>
+                  <div>박진우 | Frontend, Backend </div>
+                  <div>이유재 | Backend, Infra</div>
+                  <div>김연우 | AI</div>
                 </p>
               </li>
-              <li>
-                <span>디자인</span> 이재영
-              </li>
+              
             </ul>
           </div>
         </FooterBottom>
