@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Main = () => {
 
   return (
-   <MainLayout>메인 페이지 입니다2ddd</MainLayout>
+   <MainLayout>메인 페이지 입니다2sddd</MainLayout>
   );
 };
 export default Main;
