@@ -40,10 +40,10 @@ const Header = () => {
           ) : (
             <HeaderItem
               $isSelected={headerSelectedIndex === "myTeam"}
-              onClick={() => navigate("/login")}
+              // onClick={() => navigate("http://localhost:8080/oauth2/authorizㄴㅁation/kakao")}
             >
               <HeaderStar src={starSrc} />
-              로그인/회원가입
+              <Link to="http://localhost:8080/oauth2/authorization/kakao">카카오 로그인</Link>
             </HeaderItem>
           )}
         </HeaderContentContainer>
