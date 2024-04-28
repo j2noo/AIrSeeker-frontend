@@ -5,11 +5,24 @@ import { useRecoilValue } from "recoil";
 import logoSrc from "/assets/images/airseeker-logo.svg";
 import starSrc from "/assets/images/star.svg";
 import { headerSelectedState } from "../../recoil/atom";
+import axios from "axios";
 
 const Header = () => {
   const headerSelectedIndex = useRecoilValue(headerSelectedState);
   const navigate = useNavigate();
   const isLogin = false;
+  
+  const fetchLogin = async () => {
+    try {
+      await axios.get('http://localhost:8080/oauth2/authorization/kakao');
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const handleClick = async () => {
+    fetchLogin(); // 버튼 클릭 시 fetchData 함수 호출
+  };
 
   return (
     <>
@@ -40,10 +53,11 @@ const Header = () => {
           ) : (
             <HeaderItem
               $isSelected={headerSelectedIndex === "myTeam"}
-              // onClick={() => navigate("http://localhost:8080/oauth2/authorizㄴㅁation/kakao")}
+              // onClick={handleClick}
             >
               <HeaderStar src={starSrc} />
-              <Link to="http://localhost:8080/oauth2/authorization/kakao">카카오 로그인</Link>
+              <Link to= {"http://localhost:8080/oauth2/authorization/kakao"}>
+              카카오 로그인</Link>
             </HeaderItem>
           )}
         </HeaderContentContainer>
