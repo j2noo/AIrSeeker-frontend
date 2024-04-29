@@ -1,28 +1,18 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import {  useRecoilValue } from "recoil";
 
 import logoSrc from "/assets/images/airseeker-logo.svg";
 import starSrc from "/assets/images/star.svg";
-import { headerSelectedState } from "../../recoil/atom";
-import axios from "axios";
+import { headerSelectedState, loginInfoState } from "../../recoil/atom";
+import { useEffect } from "react";
 
 const Header = () => {
   const headerSelectedIndex = useRecoilValue(headerSelectedState);
   const navigate = useNavigate();
-  const isLogin = false;
-  
-  const fetchLogin = async () => {
-    try {
-      await axios.get('http://localhost:8080/oauth2/authorization/kakao');
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+  const loginInfo= useRecoilValue(loginInfoState);
 
-  const handleClick = async () => {
-    fetchLogin(); // 버튼 클릭 시 fetchData 함수 호출
-  };
+  useEffect(() => {}, [loginInfo]);
 
   return (
     <>
@@ -48,16 +38,18 @@ const Header = () => {
               항공권 최저가 탐색
             </HeaderItem>
           </HeaderContainer>
-          {isLogin ? (
-            <div>로그인완료</div>
+          {loginInfo.isLogin ? (
+            
+            <HeaderItem>{loginInfo.data?.name }님</HeaderItem>
           ) : (
             <HeaderItem
               $isSelected={headerSelectedIndex === "myTeam"}
               // onClick={handleClick}
             >
               <HeaderStar src={starSrc} />
-              <Link to= {"http://localhost:8080/oauth2/authorization/kakao"}>
-              카카오 로그인</Link>
+              <Link to={"http://localhost:8080/oauth2/authorization/kakao"}>
+                카카오 로그인
+              </Link>
             </HeaderItem>
           )}
         </HeaderContentContainer>
@@ -106,7 +98,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   gap: 5rem;
 `;
-const HeaderItem = styled.button<{ $isSelected: boolean }>`
+const HeaderItem = styled.button<{ $isSelected?: boolean }>`
   color: ${(props) => props.theme.colors.gray80};
   ${(props) =>
     props.$isSelected ? props.theme.fonts.subtitleM : props.theme.fonts.bodyM};

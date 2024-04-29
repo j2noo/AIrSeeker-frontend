@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Main from "./pages/main/main";
+import Main from "./pages/main/Main";
 import Layout from "./components/layout/Layout";
+import LoginPath from "./pages/login/LoginPath";
 
 function Router() {
   return (
@@ -8,6 +9,7 @@ function Router() {
       <Layout>
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/login" element={<LoginPath />} />
         </Routes>
       </Layout>
     </BrowserRouter>

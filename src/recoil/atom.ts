@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import { LoginInfo } from "../interface/Login";
 // const { persistAtom } = recoilPersist({
 //   key: "recoilPersistTest",
 //   storage: sessionStorage,
@@ -55,4 +56,12 @@ export const joinTeamCompleteModalState = atom({
 export const joinTeamRefusedModalState = atom({
   key: "joinTeamRefusedModal",
   default: false,
+});
+
+//
+export const loginInfoState = atom<LoginInfo>({
+  key: "loginState",
+  default: {
+    isLogin: false,
+  },
 });
