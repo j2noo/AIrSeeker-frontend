@@ -43,7 +43,7 @@ const LoginPath = () => {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to fetch dat2a");
+          throw new Error("Failed to fetch dat22a");
         }
         return response.json();
       })
