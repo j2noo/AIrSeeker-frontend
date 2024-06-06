@@ -43,7 +43,7 @@ const LoginPath = () => {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to fetch data");
+          throw new Error("Fa2iled to fetch data");
         }
         return response.json();
       })
