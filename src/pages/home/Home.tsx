@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
-const Main = () => {
+const Home = () => {
   return (
-    <MainLayout>
+    <HomeLayout>
       <div>
-        메인 페이지sssasdasdad
+        home
         <div>로고</div>
       </div>
-    </MainLayout>
+    </HomeLayout>
   );
 };
-export default Main;
+export default Home;
 
-const MainLayout = styled.div`
+const HomeLayout = styled.div`
   margin: 0 auto;
   /* max-width: 122.4rem; */
 `;
