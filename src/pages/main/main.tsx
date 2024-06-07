@@ -4,7 +4,7 @@ const Main = () => {
   return (
     <MainLayout>
       <div>
-        메인 페이지ss
+        메인 페이지sssasdasdad
         <div>로고</div>
       </div>
     </MainLayout>
