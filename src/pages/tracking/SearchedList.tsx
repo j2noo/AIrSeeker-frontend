@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Flight } from "../../interface/Tracking";
 import { useState } from "react";
 import Graph from "./Graph";
+import GraphNull from "./GraphNull";
 
 interface SearchedListProps {
   searchedFlights: Flight[];
@@ -36,33 +37,43 @@ const SearchedList: React.FC<SearchedListProps> = ({ searchedFlights }) => {
   };
   return (
     <SearchedLayout>
-      <SearchingTitle>항공편 선택</SearchingTitle>
+      <SearchingTitle>항공권 선택</SearchingTitle>
       <SearchedListContainer>
-        <SearchedListItem isSelected={false}>
-          <div>출발지</div>
-          <div>도착지</div>
-          <div>출발 날짜</div>
-          <div>항공사</div>
-          <div>비행 시간</div>
-        </SearchedListItem>
-        {searchedFlights.map((flight, index) => (
-          <SearchedListItem
-            key={index}
-            isSelected={selectedFlight === index}
-            onClick={() => handleFlightSelect(index, +flight.flightInfoId)}
-          >
-            <div>{flight.route.departureAirport.city}</div>
-            <div> {flight.route.arriveAirport.city}</div>
-            <div> {flight.departureDate}</div>
-            <div>{flight.airline}</div>
-            <div>
-              {flight.departureTime.substring(0, 5)} ~
-              {flight.arriveTime.substring(0, 5)}
-            </div>
-          </SearchedListItem>
-        ))}
+        {searchedFlights.length === 0 ? (
+          <NoList>검색 결과가 없습니다!</NoList>
+        ) : (
+          <>
+            <SearchedListItem isSelected={false}>
+              <div>출발지</div>
+              <div>도착지</div>
+              <div>출발 날짜</div>
+              <div>항공사</div>
+              <div>비행 시간</div>
+            </SearchedListItem>
+            {searchedFlights.map((flight, index) => (
+              <SearchedListItem
+                key={index}
+                isSelected={selectedFlight === index}
+                onClick={() => handleFlightSelect(index, +flight.flightInfoId)}
+              >
+                <div>{flight.route.departureAirport.city}</div>
+                <div>{flight.route.arriveAirport.city}</div>
+                <div>{flight.departureDate}</div>
+                <div>{flight.airline}</div>
+                <div>
+                  {flight.departureTime.substring(0, 5)} ~
+                  {flight.arriveTime.substring(0, 5)}
+                </div>
+              </SearchedListItem>
+            ))}
+          </>
+        )}
       </SearchedListContainer>
-      {flightInfoId ? <Graph flightInfoId={flightInfoId}></Graph> : null}
+      {flightInfoId ? (
+        <Graph flightInfoId={flightInfoId}></Graph>
+      ) : (
+        <GraphNull></GraphNull>
+      )}
     </SearchedLayout>
   );
 };
@@ -74,10 +85,11 @@ const SearchingTitle = styled.div`
   font-weight: 600;
 `;
 const SearchedListContainer = styled.div`
-  height: 300px;
+  /* height: 300px; */
   width: 100%;
   overflow-y: scroll;
   padding-right: 10px;
+  margin: 20px 0 50px 0;
 
   /* border: 2px solid #636363; */
   > div:first-child {
@@ -116,4 +128,11 @@ const SearchedListItem = styled.div<{ isSelected: boolean }>`
   div {
     width: 180px;
   }
+`;
+const NoList = styled.div`
+  /* border: 1px solid black;
+  border-radius: 5px; */
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
 `;

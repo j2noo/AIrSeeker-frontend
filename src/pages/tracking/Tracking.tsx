@@ -125,9 +125,9 @@ const Tracking = () => {
   return (
     <TrackingLayout>
       <TrackingTitle>
-        원하는 항공편의 가격 변동 추이를 검색 해 보세요!
+        원하는 항공권의 가격 변동 추이를 검색 해 보세요!
       </TrackingTitle>
-      <SearchingTitle>항공편 검색</SearchingTitle>
+      <SearchingTitle>항공권 검색</SearchingTitle>
       <SearchingContainer>
         {/* 출발지 검색 박스 */}
         <DropdownBox>

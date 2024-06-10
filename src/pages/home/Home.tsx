@@ -16,7 +16,7 @@ const Home = () => {
       <BackgroundContainer>
         <FlexContainer>
           <TextContainer onClick={() => navigate("/tracking")}>
-            AI를 이용한 항공권 가격 추적하러 가기 →
+            항공권 가격 추적하러 가기 →
           </TextContainer>
           <TextContainer onClick={() => navigate("/tracking")}>
             항공권 최저가 탐색하러 가기 →
@@ -32,6 +32,7 @@ const HomeLayout = styled.div`
   margin: 0 auto;
   /* max-width: 122.4rem; */
   /* position: absolute; */
+  overflow-y: hidden;
 `;
 
 const BackgroundContainer = styled.div`
@@ -49,13 +50,14 @@ const FlexContainer = styled.div`
   display: flex;
   flex-direction: column;
   float: left;
-  margin: 50px 100px;
+  margin: 30px 100px;
 
   /* justify-content: center; */
   /* align-items: center; */
 `;
 
 const TextContainer = styled.div`
+  position: relative; /* ::before 가상 요소 위치 설정을 위해 필요 */
   font-size: 20px;
   font-weight: 600;
   padding: 10px;
@@ -64,5 +66,32 @@ const TextContainer = styled.div`
   text-decoration: underline;
   text-underline-offset: 5px;
 
+  border-radius: 5px; /* 약간의 경계선을 부드럽게 하기 위해 추가 */
   margin: 10px;
+  width: auto;
+  overflow: hidden; /* 가상 요소가 컨테이너를 벗어나지 않도록 설정 */
+
+  /* 가상 요소 설정 */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: rgba(224, 240, 248, 0.282);
+    z-index: 0; /* 텍스트 뒤에 배치 */
+    transition: width 0.1s linear; /* 애니메이션 설정 */
+  }
+
+  /* hover 상태에서 가상 요소 확장 */
+  &:hover::before {
+    width: 100%;
+  }
+
+  /* 텍스트가 가상 요소 위에 오도록 설정 */
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
 `;
