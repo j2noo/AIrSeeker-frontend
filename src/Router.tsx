@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Main from "./pages/tracking/Tracking";
 import Layout from "./components/layout/Layout";
 import LoginPath from "./pages/login/LoginPath";
 import Home from "./pages/home/Home";
+import Tracking from "./pages/tracking/Tracking";
+import Find from "./pages/find/Find";
 
 function Router() {
   return (
@@ -10,7 +11,8 @@ function Router() {
       <Layout>
         <Routes>
           <Route path="" element={<Home />} />
-          <Route path="/tracking" element={<Main />} />
+          <Route path="/tracking" element={<Tracking />} />
+          <Route path="/find" element={<Find />} />
           <Route path="/login" element={<LoginPath />} />
         </Routes>
       </Layout>

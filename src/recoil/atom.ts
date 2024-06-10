@@ -8,8 +8,8 @@ import { LoginInfo } from "../interface/Login";
 export type HeaderSelectedType =
   | "none"
   | "list"
-  | "myTeam"
-  | "myProfile"
+  | "tracking"
+  | "find"
   | "login"; //추가 가능
 
 export const headerSelectedState = atom<HeaderSelectedType>({

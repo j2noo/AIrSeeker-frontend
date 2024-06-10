@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
+import { Flight } from "../../interface/Tracking";
+import axios from "axios";
+import SearchedList from "./SearchedList";
+import { useSetRecoilState } from "recoil";
+import { headerSelectedState } from "../../recoil/atom";
 
 const Tracking = () => {
-  const AIRPORT_LIST = ["ICN", "DAD"];
+  const AIRPORT_LIST = { "ICN(인천)": "INCHEON", "DAD(다낭)": "DA_NANG" };
   const AIRLINE_LIST = [
     "비엣젯항공",
     "티웨이항공",
@@ -17,6 +22,51 @@ const Tracking = () => {
     "Apg Distribution System",
     "Flexflights Aps",
   ];
+
+  const [searchedFlights, setSearchedFlights] = useState<Flight[]>([]);
+  const setHeaderSelected = useSetRecoilState(headerSelectedState);
+
+  useEffect(() => {
+    setHeaderSelected("tracking");
+  }, []);
+  const handleSearch = () => {
+    const { departureAirport, arriveAirport, airline, time, date } =
+      selectedValue;
+    console.log("출발지:", departureAirport);
+    console.log("도착지:", arriveAirport);
+    console.log("항공사:", airline);
+    console.log("출발 시각:", time);
+    console.log("출발 날짜:", date);
+
+    if (departureAirport == "" || arriveAirport == "") {
+      alert("출발지와 도착지를 선택 해 주세요!");
+      return;
+    } else if (date == "") {
+      alert("출발 날짜를 선택 해 주세요!");
+      return;
+    }
+
+    const queryParams: Record<string, string> = {};
+    if (departureAirport)
+      queryParams.departureCity = AIRPORT_LIST[departureAirport];
+    if (arriveAirport) queryParams.arriveCity = AIRPORT_LIST[arriveAirport];
+    if (airline) queryParams.airline = airline;
+    if (time) queryParams.departureTime = time;
+    if (date) queryParams.departureDate = date;
+
+    axios
+      .get("http://3.34.127.138:8080/api/flightInfos", {
+        params: queryParams,
+      })
+      .then((response) => {
+        // API에서 반환된 데이터를 상태에 업데이트합니다.
+        setSearchedFlights(response.data.data.flightInfoSearchResponseList);
+        console.log(response.data.data.flightInfoSearchResponseList);
+      })
+      .catch((error) => {
+        console.error("Error fetching searched flights:", error);
+      });
+  };
 
   // 드롭다운 상태를 객체로 관리
   const [showDropdown, setShowDropdown] = useState({
@@ -71,17 +121,6 @@ const Tracking = () => {
       time: event.target.value,
     }));
   };
-  const handleSearch = () => {
-    // 선택된 값들을 이용하여 API 호출
-    const { departureAirport, arriveAirport, airline, time, date } =
-      selectedValue;
-    // findFlightTracking API 호출 등의 작업 수행
-    console.log("출발지:", departureAirport);
-    console.log("도착지:", arriveAirport);
-    console.log("항공사:", airline);
-    console.log("출발 시각:", time);
-    console.log("출발 날짜:", date);
-  };
 
   return (
     <TrackingLayout>
@@ -101,12 +140,12 @@ const Tracking = () => {
             </DropdownSubtitle>
           </DropdownButton>
           <DropdownContent show={showDropdown.departureAirport}>
-            {AIRPORT_LIST.map((each, index) => (
+            {Object.entries(AIRPORT_LIST).map(([code], index) => (
               <DropdownItem
                 key={index}
-                onClick={() => handleOptionChange("departureAirport", each)}
+                onClick={() => handleOptionChange("departureAirport", code)}
               >
-                {each}
+                {code}
               </DropdownItem>
             ))}
           </DropdownContent>
@@ -123,12 +162,12 @@ const Tracking = () => {
             </DropdownSubtitle>
           </DropdownButton>
           <DropdownContent show={showDropdown.arriveAirport}>
-            {AIRPORT_LIST.map((each, index) => (
+            {Object.entries(AIRPORT_LIST).map(([code], index) => (
               <DropdownItem
                 key={index}
-                onClick={() => handleOptionChange("arriveAirport", each)}
+                onClick={() => handleOptionChange("arriveAirport", code)}
               >
-                {each}
+                {code}
               </DropdownItem>
             ))}
           </DropdownContent>
@@ -145,12 +184,12 @@ const Tracking = () => {
             </DropdownSubtitle>
           </DropdownButton>
           <DropdownContent show={showDropdown.airline}>
-            {AIRLINE_LIST.map((each, index) => (
+            {AIRLINE_LIST.map((code, index) => (
               <DropdownItem
                 key={index}
-                onClick={() => handleOptionChange("airline", each)}
+                onClick={() => handleOptionChange("airline", code)}
               >
-                {each}
+                {code}
               </DropdownItem>
             ))}
           </DropdownContent>
@@ -181,6 +220,7 @@ const Tracking = () => {
         </DropdownBox>
       </SearchingContainer>
       <SearchButton onClick={handleSearch}> 검색하기 →</SearchButton>
+      <SearchedList searchedFlights={searchedFlights}></SearchedList>
     </TrackingLayout>
   );
 };
@@ -198,7 +238,7 @@ const TrackingLayout = styled.div`
 const SearchingTitle = styled.div`
   font-size: 20px;
   font-weight: 600;
-`
+`;
 const SearchingContainer = styled.div`
   display: flex;
   gap: 10px;

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import {  useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
+``;
 
 import logoSrc from "/assets/images/airseeker-logo.svg";
 import starSrc from "/assets/images/star.svg";
@@ -10,7 +11,7 @@ import { useEffect } from "react";
 const Header = () => {
   const headerSelectedIndex = useRecoilValue(headerSelectedState);
   const navigate = useNavigate();
-  const loginInfo= useRecoilValue(loginInfoState);
+  const loginInfo = useRecoilValue(loginInfoState);
 
   useEffect(() => {}, [loginInfo]);
 
@@ -24,30 +25,30 @@ const Header = () => {
               <Logo src={logoSrc} />
             </Link>
             <HeaderItem
-              $isSelected={headerSelectedIndex === "list"}
-              onClick={() => navigate("/list")}
+              $isSelected={headerSelectedIndex === "tracking"}
+              onClick={() => navigate("/tracking")}
             >
               <HeaderStar src={starSrc} />
               항공권 가격 변동 추적
             </HeaderItem>
             <HeaderItem
-              $isSelected={headerSelectedIndex === "login"}
-              onClick={() => navigate("/list")}
+              $isSelected={headerSelectedIndex === "find"}
+              onClick={() => navigate("/find")}
             >
               <HeaderStar src={starSrc} />
               항공권 최저가 탐색
             </HeaderItem>
           </HeaderContainer>
           {loginInfo.isLogin ? (
-            
-            <HeaderItem>{loginInfo.data?.name }님</HeaderItem>
+            <HeaderItem>{loginInfo.data?.name}님</HeaderItem>
           ) : (
             <HeaderItem
-              $isSelected={headerSelectedIndex === "myTeam"}
+              $isSelected={headerSelectedIndex === "find"}
               // onClick={handleClick}
             >
               <HeaderStar src={starSrc} />
-              <Link to={"http://localhost:8080/oauth2/authorization/kakao"}>
+              <Link to={"http://3.34.127.138:8080/oauth2/authorization/kakao"}>
+              {/* <Link to={"http://localhost:8080/oauth2/authorization/kakao"}> */}
                 카카오 로그인
               </Link>
             </HeaderItem>
@@ -67,8 +68,8 @@ const HeaderLayout = styled.header`
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(255, 255, 255, 0.8);
-  border-bottom: 1px solid ${(props) => props.theme.colors.gray10};
+  background-color: rgba(255, 255, 255, 0.4);
+  /* border-bottom: 1px solid ${(props) => props.theme.colors.gray10}; */
   backdrop-filter: blur(8px);
 
   width: 100%;
