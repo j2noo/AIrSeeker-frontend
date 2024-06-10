@@ -30,11 +30,11 @@ const LoginPath = () => {
     const accessToken = params["access_token"];
     const refreshToken = params["refresh_token"];
 
-    // console.log("AccessToken", accessToken);
-    // console.log("RefreshToken", refreshToken);
+    console.log("AccessToken", accessToken);
+    console.log("RefreshToken", refreshToken);
 
     // API 호출
-    fetch("http://localhost:8080/api/user", {
+    fetch("http://3.34.127.138:8080/api/user", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
