@@ -50,7 +50,7 @@ const FlexContainer = styled.div`
   display: flex;
   flex-direction: column;
   float: left;
-  margin: 30px 100px;
+  margin: 30px 150px;
 
   /* justify-content: center; */
   /* align-items: center; */
@@ -59,17 +59,20 @@ const FlexContainer = styled.div`
 const TextContainer = styled.div`
   position: relative; /* ::before 가상 요소 위치 설정을 위해 필요 */
   font-size: 20px;
-  font-weight: 600;
-  padding: 10px;
+  font-weight: 500;
+  padding: 20px;
   cursor: pointer;
 
-  text-decoration: underline;
+  /* text-decoration: underline; */
   text-underline-offset: 5px;
-
-  border-radius: 5px; /* 약간의 경계선을 부드럽게 하기 위해 추가 */
+  border-radius: 25px; /* 약간의 경계선을 부드럽게 하기 위해 추가 */
+  box-shadow: 0 0 50px rgba(60, 145, 187, 0.582); /* 10px의 흐림 효과 */
   margin: 10px;
   width: auto;
   overflow: hidden; /* 가상 요소가 컨테이너를 벗어나지 않도록 설정 */
+
+  /* border: 1px solid wheat; */
+  background-color: rgba(142, 199, 223, 0.282);
 
   /* 가상 요소 설정 */
   &::before {
