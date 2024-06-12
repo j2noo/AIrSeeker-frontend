@@ -14,7 +14,7 @@ const Header = () => {
   const loginInfo = useRecoilValue(loginInfoState);
 
   useEffect(() => {}, [loginInfo]);
-  console.log(loginInfo);
+  console.log("loginInfo", loginInfo);
   return (
     <>
       <Spacer />
@@ -35,20 +35,19 @@ const Header = () => {
               $isSelected={headerSelectedIndex === "find"}
               onClick={() => navigate("/find")}
             >
-              <HeaderStar src={starSrc} />
-              항공권 최저가 탐색
+              <HeaderStar src={starSrc} />내 항공권 목록
             </HeaderItem>
           </HeaderContainer>
           {loginInfo.isLogin ? (
-            <HeaderItem>{loginInfo.data?.name}님</HeaderItem>
+            <HeaderItem>{loginInfo.data?.name}님 </HeaderItem>
           ) : (
             <HeaderItem
-              $isSelected={headerSelectedIndex === "find"}
+              $isSelected={headerSelectedIndex === "login"}
               // onClick={handleClick}
             >
               <HeaderStar src={starSrc} />
-              {/* <Link to={"http://3.34.127.138:8080/oauth2/authorization/kakao"}> */}
-              <Link to={"http://localhost:8080/oauth2/authorization/kakao"}>
+              <Link to={"http://3.34.127.138:8080/oauth2/authorization/kakao"}>
+                {/* <Link to={"http://localhost:8080/oauth2/authorization/kakao"}> */}
                 카카오 로그인
               </Link>
             </HeaderItem>

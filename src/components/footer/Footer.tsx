@@ -1,13 +1,10 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Footer = () => {
   return (
     <FooterContainer>
       <FooterBox>
-        <FooterImage
-          src={'/assets/images/airseeker-logo.svg'}
-          alt={'logo'}
-        />
+        <FooterImage src={"/assets/images/airseeker-logo.svg"} alt={"logo"} />
         <FooterBottom>
           <div>
             <ul>
@@ -27,16 +24,14 @@ const Footer = () => {
           </div>
           <div>
             <ul>
-              
               <li>
                 <span>개발</span>
-                <p>
+                <div>
                   <div>박진우 | Frontend, Backend </div>
                   <div>이유재 | Backend, Infra</div>
                   <div>김연우 | AI</div>
-                </p>
+                </div>
               </li>
-              
             </ul>
           </div>
         </FooterBottom>

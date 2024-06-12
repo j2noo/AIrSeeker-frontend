@@ -220,16 +220,19 @@ const Tracking = () => {
         </DropdownBox>
       </SearchingContainer>
       <SearchButton onClick={handleSearch}> 검색하기 →</SearchButton>
+      
       <SearchedList searchedFlights={searchedFlights}></SearchedList>
     </TrackingLayout>
   );
 };
 const TrackingTitle = styled.div`
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
 
-  margin: 50px 0;
+  padding: 40px 0;
+
+  color: #000000;
 `;
 const TrackingLayout = styled.div`
   width: 122.4rem;
@@ -306,7 +309,7 @@ const DropdownItem = styled.a`
 `;
 
 const DropdownTitle = styled.div`
-  font-size: 24px;
+  font-size: 20px;
   margin-bottom: 10px;
   font-weight: 600;
 `;

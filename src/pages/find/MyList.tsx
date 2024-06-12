@@ -1,44 +1,27 @@
 import styled from "styled-components";
 import { Flight } from "../../interface/Tracking";
 import { useState } from "react";
-import Graph from "./Graph";
-import GraphNull from "./GraphNull";
-import axios from "axios";
-import { useRecoilValue } from "recoil";
-import { loginInfoState } from "../../recoil/atom";
+import Graph from "../tracking/Graph";
+import GraphNull from "../tracking/GraphNull";
 
 interface SearchedListProps {
-  searchedFlights: Flight[];
+  likesFlight: Flight[];
 }
 
-const SearchedList: React.FC<SearchedListProps> = ({ searchedFlights }) => {
-  const loginInfo = useRecoilValue(loginInfoState);
+const MyList: React.FC<SearchedListProps> = ({ likesFlight }) => {
   const [selectedFlight, setSelectedFlight] = useState<number | null>(null);
   const [flightInfoId, setFlightInfoId] = useState<number>(0);
   const handleFlightSelect = (index: number, flightInfoId: number) => {
     setSelectedFlight(index);
     setFlightInfoId(flightInfoId);
   };
-  const handleLike = async (flightInfoId: number) => {
-    try {
-      const response = await axios.post("http://3.34.127.138:8080/api/likes", {
-        userId: 2,
-        flightInfoId: flightInfoId,
-      });
-      if (response.status === 200) {
-        console.log("찜하기 성공!");
-      }
-    } catch (error) {
-      console.error("찜하기 실패:", error);
-      alert("찜하기 실패!");
-    }
-  };
+
   return (
     <SearchedLayout>
       <SearchingTitle>항공권 선택</SearchingTitle>
       <SearchedListContainer>
-        {searchedFlights.length === 0 ? (
-          <NoList>검색 결과가 없습니다!</NoList>
+        {likesFlight.length === 0 ? (
+          <NoList>찜한 항공권이 없습니다!</NoList>
         ) : (
           <>
             <SearchedListItem isSelected={false}>
@@ -47,9 +30,8 @@ const SearchedList: React.FC<SearchedListProps> = ({ searchedFlights }) => {
               <div>출발 날짜</div>
               <div>항공사</div>
               <div>비행 시간</div>
-              <div>찜</div>
             </SearchedListItem>
-            {searchedFlights.map((flight, index) => (
+            {likesFlight.map((flight, index) => (
               <SearchedListItem
                 key={index}
                 isSelected={selectedFlight === index}
@@ -63,23 +45,11 @@ const SearchedList: React.FC<SearchedListProps> = ({ searchedFlights }) => {
                   {flight.departureTime.substring(0, 5)} ~
                   {flight.arriveTime.substring(0, 5)}
                 </div>
-                <Heart
-                  onClick={(e) => {
-                    e.stopPropagation(); // 클릭 이벤트 전파 방지
-                    if (!loginInfo.isLogin) {
-                      alert("로그인 후 이용해 주세요!");
-                      return;
-                    }
-                    handleLike(+flight.flightInfoId);
-                    alert("찜하기 성공!");
-                  }}
-                ></Heart>
               </SearchedListItem>
             ))}
           </>
         )}
       </SearchedListContainer>
-
       {flightInfoId ? (
         <Graph flightInfoId={flightInfoId}></Graph>
       ) : (
@@ -88,7 +58,7 @@ const SearchedList: React.FC<SearchedListProps> = ({ searchedFlights }) => {
     </SearchedLayout>
   );
 };
-export default SearchedList;
+export default MyList;
 
 const SearchedLayout = styled.div``;
 const SearchingTitle = styled.div`
@@ -152,15 +122,4 @@ const NoList = styled.div`
   text-align: center;
   font-size: 15px;
   font-weight: 500;
-`;
-const Heart = styled.div`
-  width: 30px;
-  height: 30px;
-  background-image: url("assets/images/line100.png");
-  background-size: cover;
-  transition: background-image 0.2s ease;
 
-  &:hover {
-    background-image: url("assets/images/fill100.png");
-  }
-`;

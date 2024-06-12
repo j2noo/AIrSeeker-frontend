@@ -15,6 +15,7 @@ const LoginPath = () => {
     function getUrlParams(url) {
       const params = {};
       const urlParts = url.split("?");
+      console.log(urlParts);
       if (urlParts.length > 1) {
         const queryParams = urlParts[1].split("&");
         queryParams.forEach((param) => {
@@ -34,8 +35,8 @@ const LoginPath = () => {
     console.log("RefreshToken", refreshToken);
 
     // API 호출
-    // fetch("http://3.34.127.138:8080/api/user", {
-    fetch("http://localhost:8080/api/user", {
+    fetch("http://3.34.127.138:8080/api/user", {
+      // fetch("http://localhost:8080/api/user", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -50,13 +51,10 @@ const LoginPath = () => {
         if (contentType && contentType.includes("application/json")) {
           return response.json();
         } else {
-          console.log("content type : ", contentType);
-          console.log(response);
           throw new Error("Received non-JSON response");
         }
       })
       .then((data) => {
-        console.log("여기가찌2");
         // API 호출 성공 시 데이터 처리
         console.log("API Response:", data);
         const successLoginInfo: LoginInfo = {

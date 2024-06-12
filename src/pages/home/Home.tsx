@@ -15,11 +15,14 @@ const Home = () => {
     <HomeLayout>
       <BackgroundContainer>
         <FlexContainer>
+          <TextDetail>
+            AI를 이용한 최저가 항공권 조회, <span>AirSeeker</span>
+          </TextDetail>
           <TextContainer onClick={() => navigate("/tracking")}>
             항공권 가격 추적하러 가기 →
           </TextContainer>
-          <TextContainer onClick={() => navigate("/tracking")}>
-            항공권 최저가 탐색하러 가기 →
+          <TextContainer onClick={() => navigate("/find")}>
+            내 항공권 목록 보기 →
           </TextContainer>
         </FlexContainer>
       </BackgroundContainer>
@@ -49,30 +52,39 @@ const BackgroundContainer = styled.div`
 const FlexContainer = styled.div`
   display: flex;
   flex-direction: column;
-  float: left;
+  flex-basis: content;
+  /* float: left; */
   margin: 30px 150px;
 
   /* justify-content: center; */
   /* align-items: center; */
 `;
-
+const TextDetail = styled.div`
+  font-size: 32px;
+  font-weight: 700;
+  padding: 20px;
+  > span {
+    color: #5872d1;
+  }
+`;
 const TextContainer = styled.div`
+  display: inline-block;
   position: relative; /* ::before 가상 요소 위치 설정을 위해 필요 */
   font-size: 24px;
   font-weight: 600;
   padding: 20px;
   cursor: pointer;
 
-  /* text-decoration: underline; */
-  text-underline-offset: 5px;
   border-radius: 25px; /* 약간의 경계선을 부드럽게 하기 위해 추가 */
-  /* box-shadow: 0 0 50px rgba(60, 145, 187, 0.582); */
   margin: 10px;
-  width: auto;
   overflow: hidden; /* 가상 요소가 컨테이너를 벗어나지 않도록 설정 */
 
-  /* border: 1px solid wheat; */
-  /* background-color: rgba(142, 199, 223, 0.282); */
+  border: 2px solid black;
+  border-radius: 15px; /* 약간의 경계선을 부드럽게 하기 위해 추가 */
+  width: 320px;
+  color: #000000f1;
+
+  background-color: rgba(227, 238, 243, 0.197);
 
 
   /* 가상 요소 설정 */
@@ -83,7 +95,7 @@ const TextContainer = styled.div`
     left: 0;
     width: 0;
     height: 100%;
-    background-color: rgba(224, 240, 248, 0.282);
+    background-color: rgba(224, 240, 248, 0.083);
     z-index: 0; /* 텍스트 뒤에 배치 */
     transition: width 0.1s linear; /* 애니메이션 설정 */
   }
