@@ -14,7 +14,7 @@ const Header = () => {
   const loginInfo = useRecoilValue(loginInfoState);
 
   useEffect(() => {}, [loginInfo]);
-
+  console.log(loginInfo);
   return (
     <>
       <Spacer />
@@ -47,8 +47,8 @@ const Header = () => {
               // onClick={handleClick}
             >
               <HeaderStar src={starSrc} />
-              <Link to={"http://3.34.127.138:8080/oauth2/authorization/kakao"}>
-              {/* <Link to={"http://localhost:8080/oauth2/authorization/kakao"}> */}
+              {/* <Link to={"http://3.34.127.138:8080/oauth2/authorization/kakao"}> */}
+              <Link to={"http://localhost:8080/oauth2/authorization/kakao"}>
                 카카오 로그인
               </Link>
             </HeaderItem>
