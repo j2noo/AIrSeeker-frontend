@@ -35,7 +35,7 @@ const LoginPath = () => {
 
     // API 호출
     // fetch("http://3.34.127.138:8080/api/user", {
-    fetch("http:/localhost:8080/api/user", {
+    fetch("http://localhost:8080/api/user", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -46,9 +46,17 @@ const LoginPath = () => {
         if (!response.ok) {
           throw new Error("Fa2iled to fetch 2data");
         }
-        return response.json();
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          return response.json();
+        } else {
+          console.log("content type : ", contentType);
+          console.log(response);
+          throw new Error("Received non-JSON response");
+        }
       })
       .then((data) => {
+        console.log("여기가찌2");
         // API 호출 성공 시 데이터 처리
         console.log("API Response:", data);
         const successLoginInfo: LoginInfo = {
@@ -57,6 +65,7 @@ const LoginPath = () => {
             name: data.data.name,
             accessToken: accessToken,
             refreshToken: refreshToken,
+            userId: data.data.userId,
           },
         };
         setLoginInfo(successLoginInfo);

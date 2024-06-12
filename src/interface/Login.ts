@@ -4,6 +4,7 @@ export interface LoginInfo {
     refreshToken?: string;
     accessToken?: string;
     name?: string;
+    userId?: number;
   };
 }
 export interface ResponseLogin {

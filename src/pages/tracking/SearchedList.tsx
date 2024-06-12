@@ -3,30 +3,11 @@ import { Flight } from "../../interface/Tracking";
 import { useState } from "react";
 import Graph from "./Graph";
 import GraphNull from "./GraphNull";
+import axios from "axios";
 
 interface SearchedListProps {
   searchedFlights: Flight[];
 }
-// const SEARCHED_FLIGHTS: Flight[] = [
-//   {
-//     flightInfoId: "1",
-//     departureDate: "2023-06-10",
-//     departureTime: "15:30:00",
-//     arriveTime: "15:30:00",
-//     price: 100,
-//     route: { from: "ICN", to: "DAD" },
-//     airline: "대한항공",
-//   },
-//   {
-//     flightInfoId: "2",
-//     departureDate: "2023-06-11",
-//     departureTime: "15:30:00",
-//     arriveTime: "15:30:00",
-//     price: 120,
-//     route: { from: "ICN", to: "DAD" },
-//     airline: "아시아나항공",
-//   },
-// ];
 
 const SearchedList: React.FC<SearchedListProps> = ({ searchedFlights }) => {
   const [selectedFlight, setSelectedFlight] = useState<number | null>(null);
@@ -34,6 +15,20 @@ const SearchedList: React.FC<SearchedListProps> = ({ searchedFlights }) => {
   const handleFlightSelect = (index: number, flightInfoId: number) => {
     setSelectedFlight(index);
     setFlightInfoId(flightInfoId);
+  };
+  const handleLike = async (flightInfoId: number) => {
+    try {
+      const response = await axios.post("http://3.34.127.138:8080/api/likes", {
+        userId: 2,
+        flightInfoId: flightInfoId,
+      });
+      if (response.status === 200) {
+        alert("찜하기 성공!");
+      }
+    } catch (error) {
+      console.error("찜하기 실패:", error);
+      alert("찜하기 실패!");
+    }
   };
   return (
     <SearchedLayout>
@@ -49,6 +44,7 @@ const SearchedList: React.FC<SearchedListProps> = ({ searchedFlights }) => {
               <div>출발 날짜</div>
               <div>항공사</div>
               <div>비행 시간</div>
+              <div>찜</div>
             </SearchedListItem>
             {searchedFlights.map((flight, index) => (
               <SearchedListItem
@@ -64,6 +60,10 @@ const SearchedList: React.FC<SearchedListProps> = ({ searchedFlights }) => {
                   {flight.departureTime.substring(0, 5)} ~
                   {flight.arriveTime.substring(0, 5)}
                 </div>
+                <Heart onClick={(e) => {
+                  e.stopPropagation(); // 클릭 이벤트 전파 방지
+                  handleLike(+flight.flightInfoId);
+                }}></Heart>
               </SearchedListItem>
             ))}
           </>
@@ -117,6 +117,8 @@ const SearchedListContainer = styled.div`
 const SearchedListItem = styled.div<{ isSelected: boolean }>`
   display: flex;
   justify-content: center;
+  align-items: center;
+  text-align: center;
 
   gap: 10px;
   font-size: 18px;
@@ -126,7 +128,11 @@ const SearchedListItem = styled.div<{ isSelected: boolean }>`
   background-color: ${(props) => (props.isSelected ? "#6b88f1" : "white")};
   color: ${(props) => (props.isSelected ? "white" : "black")};
   div {
-    width: 180px;
+    width: 190px;
+  }
+  div:nth-child(6) {
+    width: 30px; // 원하는 크기로 설정
+    height: 30px; // 원하는 크기로 설정
   }
 `;
 const NoList = styled.div`
@@ -135,4 +141,15 @@ const NoList = styled.div`
   text-align: center;
   font-size: 15px;
   font-weight: 500;
+`;
+const Heart = styled.div`
+  width: 30px;
+  height: 30px;
+  background-image: url("assets/images/line100.png");
+  background-size: cover;
+  transition: background-image 0.2s ease;
+
+  &:hover {
+    background-image: url("assets/images/fill100.png");
+  }
 `;
