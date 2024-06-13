@@ -5,6 +5,7 @@ import axios from "axios";
 import SearchedList from "./SearchedList";
 import { useSetRecoilState } from "recoil";
 import { headerSelectedState } from "../../recoil/atom";
+import { BASE_URL } from "../../common/constant";
 
 const Tracking = () => {
   const AIRPORT_LIST = {
@@ -69,7 +70,7 @@ const Tracking = () => {
     if (date) queryParams.departureDate = date;
 
     axios
-      .get("http://3.34.127.138:8080/api/flightInfos", {
+      .get(BASE_URL +"api/flightInfos", {
         params: queryParams,
       })
       .then((response) => {

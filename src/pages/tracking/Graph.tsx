@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Chart from "react-apexcharts";
 import axios from "axios";
+import { BASE_URL } from "../../common/constant";
 
 interface GraphProps {
   flightInfoId: number;
@@ -37,7 +38,7 @@ const Graph: React.FC<GraphProps> = ({ flightInfoId }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://3.34.127.138:8080/api/flightPriceInfos/${flightInfoId}`
+          `${BASE_URL}api/flightPriceInfos/${flightInfoId}`
         );
 
         const data = response.data.data;

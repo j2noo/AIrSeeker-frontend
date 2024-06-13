@@ -4,6 +4,7 @@ import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { loginInfoState } from "../../recoil/atom";
 import { LoginInfo } from "../../interface/Login";
+import { BASE_URL } from "../../common/constant";
 
 const LoginPath = () => {
   console.log("loginpath");
@@ -35,7 +36,7 @@ const LoginPath = () => {
     console.log("RefreshToken", refreshToken);
 
     // API 호출
-    fetch("http://3.34.127.138:8080/api/user", {
+    fetch(BASE_URL + "api/user", {
       // fetch("http://localhost:8080/api/user", {
       method: "GET",
       headers: {

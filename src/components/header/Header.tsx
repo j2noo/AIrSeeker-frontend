@@ -7,6 +7,7 @@ import logoSrc from "/assets/images/airseeker-logo.svg";
 import starSrc from "/assets/images/star.svg";
 import { headerSelectedState, loginInfoState } from "../../recoil/atom";
 import { useEffect } from "react";
+import { BASE_URL } from "../../common/constant";
 
 const Header = () => {
   const headerSelectedIndex = useRecoilValue(headerSelectedState);
@@ -46,7 +47,7 @@ const Header = () => {
               // onClick={handleClick}
             >
               <HeaderStar src={starSrc} />
-              <Link to={"http://3.34.127.138:8080/oauth2/authorization/kakao"}>
+              <Link to={BASE_URL + "oauth2/authorization/kakao"}>
                 {/* <Link to={"http://localhost:8080/oauth2/authorization/kakao"}> */}
                 카카오 로그인
               </Link>

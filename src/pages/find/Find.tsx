@@ -6,6 +6,7 @@ import { Flight } from "../../interface/Tracking";
 import MyList from "./MyList";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../common/constant";
 
 const Find = () => {
   const setHeaderSelected = useSetRecoilState(headerSelectedState);
@@ -24,7 +25,7 @@ const Find = () => {
 
     // API 호출
     axios
-      .get(`http://3.34.127.138:8080/api/flightInfos/user/2/like`)
+      .get(`${BASE_URL}api/flightInfos/user/2/like`)
       .then((response) => {
         // API 호출 성공 시 데이터를 likesFilght에 설정
         const likesData = response.data.data.flightInfoSearchResponseList;

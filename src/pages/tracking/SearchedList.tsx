@@ -6,6 +6,7 @@ import GraphNull from "./GraphNull";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { loginInfoState } from "../../recoil/atom";
+import { BASE_URL } from "../../common/constant";
 
 interface SearchedListProps {
   searchedFlights: Flight[];
@@ -21,7 +22,7 @@ const SearchedList: React.FC<SearchedListProps> = ({ searchedFlights }) => {
   };
   const handleLike = async (flightInfoId: number) => {
     try {
-      const response = await axios.post("http://3.34.127.138:8080/api/likes", {
+      const response = await axios.post(BASE_URL + "api/likes", {
         userId: 2,
         flightInfoId: flightInfoId,
       });
