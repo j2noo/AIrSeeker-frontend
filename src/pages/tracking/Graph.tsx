@@ -66,7 +66,7 @@ const Graph: React.FC<GraphProps> = ({ flightInfoId }) => {
         item.search_date.substring(8, 10)
     );
     const halfIndex = Math.floor(prices.length / 2); // 데이터의 중간 인덱스를 찾음
-    const colors = prices.map((price, index) =>
+    const colors = prices.map((index) =>
       index < halfIndex ? "#2196F3" : "#FF0000"
     );
     console.log(prices, dates);
