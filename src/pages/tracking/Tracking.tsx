@@ -7,7 +7,21 @@ import { useSetRecoilState } from "recoil";
 import { headerSelectedState } from "../../recoil/atom";
 
 const Tracking = () => {
-  const AIRPORT_LIST = { "ICN(인천)": "INCHEON", "DAD(다낭)": "DA_NANG" };
+  const AIRPORT_LIST = {
+    "ICN(인천)": "INCHEON",
+    "DAD(다낭)": "DA_NANG",
+    "PUS(김해)": "GIMHAE",
+    "KIX(오사카)": "OSAKA",
+    "PEK(베이징)": "BEIJING",
+    "PVG(상하이)": "SHANGHAI",
+    "JFK(뉴욕)": "NEW_YORK",
+    "HKG(홍콩)": "HONG_KONG",
+    "TPE(타이페이)": "TAIPEI",
+    "LAX(로스앤젤레스)": "LOS_ANGELES",
+    "SIN(싱가포르)": "SINGAPORE",
+    "BKK(방콕)": "BANGKOK",
+  };
+
   const AIRLINE_LIST = [
     "비엣젯항공",
     "티웨이항공",
@@ -220,7 +234,7 @@ const Tracking = () => {
         </DropdownBox>
       </SearchingContainer>
       <SearchButton onClick={handleSearch}> 검색하기 →</SearchButton>
-      
+
       <SearchedList searchedFlights={searchedFlights}></SearchedList>
     </TrackingLayout>
   );
