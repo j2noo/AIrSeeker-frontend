@@ -25,7 +25,7 @@ const Find = () => {
 
     // API 호출
     axios
-      .get(`${BASE_URL}api/flightInfos/user/2/like`)
+      .get(`${BASE_URL}api/flightInfos/user/${loginInfo.data?.userId}/like`)
       .then((response) => {
         // API 호출 성공 시 데이터를 likesFilght에 설정
         const likesData = response.data.data.flightInfoSearchResponseList;
