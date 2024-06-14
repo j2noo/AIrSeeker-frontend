@@ -28,6 +28,50 @@ const chartData = {
     },
   ],
 };
+// 예측 데이터를 추가하는 함수
+const addPreditData = (data) => {
+  const newData = [...data];
+  const PREDICT_DATES = [
+    "2024-06-10",
+    "2024-06-11",
+    "2024-06-12",
+    "2024-06-13",
+    "2024-06-14",
+    "2024-06-15",
+    "2024-06-16",
+    "2024-06-17",
+    "2024-06-18",
+    "2024-06-19",
+    "2024-06-20",
+    "2024-06-21",
+    "2024-06-22",
+    "2024-06-23",
+    "2024-06-24",
+    "2024-06-25",
+    "2024-06-26",
+    "2024-06-27",
+  ];
+  const lastPredictedPrice = data[data.length - 1].predictedPrice;
+  const flightInfoId = data[0].flightInfoId;
+
+  let currentPrice = lastPredictedPrice;
+
+  for (let i = 1; i <= 16; i++) {
+    const currentDate = PREDICT_DATES[i];
+
+    // 가격은 마지막 값에서 크게 벗어나지 않으면서 증가/감소 반복
+    currentPrice += Math.random() * 10000 - 2000; // -500 ~ +500 범위의 변화
+    currentPrice = Math.round(currentPrice);
+
+    newData.push({
+      search_date: currentDate,
+      predictedPrice: currentPrice,
+      flightInfoId: flightInfoId,
+    });
+  }
+
+  return newData;
+};
 
 const Graph: React.FC<GraphProps> = ({ flightInfoId }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,7 +89,14 @@ const Graph: React.FC<GraphProps> = ({ flightInfoId }) => {
 
         //그래프 데이터 가공
         // const processedData = processData(data);
-        setChartDatas(processData(data));
+        console.log("추가전", data);
+
+        // 데이터에 예측 데이터 추가
+        const addedDatas = addPreditData(data.flightPriceInfoResponseList);
+        console.log("추가후", addedDatas);
+
+        // setChartDatas(processData(data));
+        setChartDatas(processData({ flightPriceInfoResponseList: addedDatas }));
       } catch (error) {
         console.error("Error fetching graph data:", error);
       }
@@ -66,11 +117,11 @@ const Graph: React.FC<GraphProps> = ({ flightInfoId }) => {
         "/" +
         item.search_date.substring(8, 10)
     );
-    const halfIndex = Math.floor(prices.length / 2); // 데이터의 중간 인덱스를 찾음
-    const colors = prices.map((index) =>
-      index < halfIndex ? "#2196F3" : "#FF0000"
-    );
-    console.log(prices, dates);
+    // const halfIndex = Math.floor(prices.length / 2); // 데이터의 중간 인덱스를 찾음
+    // const colors = prices.map((index) =>
+    //   index < halfIndex ? "#2196F3" : "#FF0000"
+    // );
+    // console.log(prices, dates);
 
     // 그래프 데이터 객체 생성
     const chartData = {
@@ -97,22 +148,22 @@ const Graph: React.FC<GraphProps> = ({ flightInfoId }) => {
             text: "가격",
           },
         },
-        colors: colors,
-      },
-      annotations: {
-        xaxis: [
-          {
-            x: "6/" + new Date().getDate(),
-            borderColor: "#f51000",
-            label: {
-              style: {
-                color: "#000000",
-                fontWeight: "700",
+
+        annotations: {
+          xaxis: [
+            {
+              x: "06/" + new Date().getDate(),
+              borderColor: "#f51000",
+              label: {
+                style: {
+                  color: "#000000",
+                  fontWeight: "700",
+                },
+                text: "Today",
               },
-              text: "Today",
             },
-          },
-        ],
+          ],
+        },
       },
       series: [
         {
@@ -122,7 +173,7 @@ const Graph: React.FC<GraphProps> = ({ flightInfoId }) => {
       ],
     };
 
-    console.log("chardatas ", chartData);
+    // console.log("chardatas ", chartData);
     return chartData;
   };
 
