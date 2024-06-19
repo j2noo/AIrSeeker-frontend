@@ -46,7 +46,7 @@ const LoginPath = () => {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Fa2iled to fetch 2data");
+          throw new Error("Fza2iled to fetch 2data");
         }
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.includes("application/json")) {
